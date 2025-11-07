@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name = "com.univalle.widgetinventory.ui.login.LoginFragment"
+        android:name="com.univalle.widgetinventory.ui.login.LoginFragment"
         android:label="Login"
         tools:layout="@layout/fragment_login">
         <action
