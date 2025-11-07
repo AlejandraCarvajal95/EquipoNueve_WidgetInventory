@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">WidgetInventory</string>
+    <string name="title_login">Inventory</string>
 </resources>
