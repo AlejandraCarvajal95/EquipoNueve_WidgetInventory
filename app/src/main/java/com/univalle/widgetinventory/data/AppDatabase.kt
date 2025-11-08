@@ -9,7 +9,7 @@ import com.univalle.widgetinventory.utils.Constants.NAME_BD
 @Database(entities = [ProductEntity::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun productDao(): ProductsDAO
+    abstract fun productsDao(): ProductsDAO
 
     companion object{
         fun getDatabase(context: Context): AppDatabase {

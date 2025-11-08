@@ -20,4 +20,11 @@
         android:name="com.univalle.widgetinventory.ui.home.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/agregarProductoFragment"
+        android:name="com.univalle.widgetinventory.ui.productos.agregar.AgregarProductoFragment"
+        android:label="Agregar"
+        tools:layout="@layout/fragment_agregar_producto"/>
+
 </navigation>

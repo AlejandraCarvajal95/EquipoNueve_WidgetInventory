@@ -12,8 +12,8 @@ interface ProductsDAO {
     @Query("SELECT * FROM productos")
     suspend fun getAll(): List<ProductEntity>
 
-    @Query("SELECT * FROM productos WHERE id = :idBuscado")
-    suspend fun getProductoByID(idBuscado: Int): ProductEntity
+    @Query("SELECT * FROM productos WHERE codigo = :codigoBuscado")
+    suspend fun getProductoByID(codigoBuscado: Int): ProductEntity
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertProducto(producto: ProductEntity)
@@ -21,6 +21,6 @@ interface ProductsDAO {
     @Update
     suspend fun updateProducto(producto: ProductEntity)
 
-    @Query("DELETE FROM productos WHERE id = :idAEliminar")
-    suspend fun deleteProducto(idAEliminar: Int)
+    @Query("DELETE FROM productos WHERE codigo = :codigoBuscado")
+    suspend fun deleteProducto(codigoBuscado: Int)
 }
