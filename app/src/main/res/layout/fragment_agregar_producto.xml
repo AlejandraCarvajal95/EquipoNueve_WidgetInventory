@@ -18,7 +18,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:title="@string/agregar_producto"
             app:titleTextColor="@color/white"
-            android:background="@color/toolBar">
+            android:background="@color/toolBar"
+            app:navigationIcon="@drawable/arrow_back">
         </androidx.appcompat.widget.Toolbar>
 
         <LinearLayout
