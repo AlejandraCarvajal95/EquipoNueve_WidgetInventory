@@ -15,7 +15,7 @@ interface ProductsDAO {
     @Query("SELECT * FROM productos WHERE codigo = :codigoBuscado")
     suspend fun getProductoByID(codigoBuscado: Int): ProductEntity
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun insertProducto(producto: ProductEntity)
 
     @Update
