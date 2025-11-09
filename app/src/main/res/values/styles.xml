@@ -17,10 +17,6 @@
 
         <item name="backgroundTint">@color/naranja</item>
 
-        <item name="android:textColor">@android:color/white</item>
-
-        <item name="android:textStyle">bold</item>
-
         <item name="cornerRadius">24dp</item>
 
         <item name="colorControlHighlight">#FFFFFF50</item>
