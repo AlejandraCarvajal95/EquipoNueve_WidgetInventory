@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels // Importa la delegación de ViewModels
 import androidx.navigation.fragment.findNavController
@@ -54,6 +55,19 @@ class AgregarProductoFragment : Fragment() {
                 precio = precio,
                 cantidad = cantidad
             )
+        }
+
+        viewModel.isSaved.observe(viewLifecycleOwner) { isSaved ->
+            if (isSaved) {
+                // ÉXITO: Mostrar Toast y Navegar (Criterio 8)
+                Toast.makeText(requireContext(), "Se guardó producto correctamente", Toast.LENGTH_SHORT).show()
+                findNavController().navigateUp()
+
+            } else {
+                // ERROR: Mostrar Toast de error
+                Toast.makeText(requireContext(), "Error al añadir el producto", Toast.LENGTH_LONG).show()
+                // No navegamos si hay error
+            }
         }
 
     }
