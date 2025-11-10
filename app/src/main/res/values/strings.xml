@@ -6,4 +6,6 @@
     <string name="biometric_subtitle">Ingrese su huella digital</string>
     <string name="biometric_cancel">Cancelar</string>
     <string name="biometric_error">Autenticación biométrica no disponible</string>
+    <string name="title_home">Inventario</string>
+    <string name="descripcionExit">Salir</string>
 </resources>
