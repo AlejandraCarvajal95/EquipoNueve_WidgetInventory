@@ -4,4 +4,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="greyBackground">#1E282D</color>
     <color name="orange">#E5502D</color>
+    <color name="appBlack">#CC000000</color>
+    <color name="toolBar">#424242</color>
+    <color name="naranja">#e7522e</color>
+    <color name="darkOrange">#aa3d24</color>
 </resources>
