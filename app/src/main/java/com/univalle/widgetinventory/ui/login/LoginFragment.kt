@@ -1,5 +1,6 @@
 package com.univalle.widgetinventory.ui.login
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -23,6 +24,12 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 		val biometricPrompt = BiometricPrompt(this, executor, object : BiometricPrompt.AuthenticationCallback() {
 			override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
 				super.onAuthenticationSucceeded(result)
+
+				// Guardar sesión
+				val sharedPreferences = requireContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+				sharedPreferences.edit().putBoolean("is_logged_in", true).apply()
+
+				// Navegar a Home
 				findNavController().navigate(R.id.action_loginFragment_to_homeFragment)
 			}
 		})
