@@ -1,11 +1,11 @@
-package com.univalle.widgetinventory.ui.productos.agregar
+package com.univalle.widgetinventory.viewModel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.univalle.widgetinventory.data.ProductRepository
+import com.univalle.widgetinventory.repository.ProductRepository
 import com.univalle.widgetinventory.model.ProductEntity
 import kotlinx.coroutines.launch
 

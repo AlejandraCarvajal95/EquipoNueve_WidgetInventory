@@ -1,4 +1,4 @@
-package com.univalle.widgetinventory.ui.login
+package com.univalle.widgetinventory.view.fragment
 
 import android.content.Context
 import android.os.Bundle

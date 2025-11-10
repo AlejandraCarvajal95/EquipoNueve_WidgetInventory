@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/greyBackground"
-        tools:context=".ui.login.LoginFragment">
+        tools:context=".view.fragment.LoginFragment">
 
         <!-- 🔸 Animación del logo INVENTORY -->
         <com.airbnb.lottie.LottieAnimationView
@@ -42,8 +42,8 @@
         <!-- 🔸 Animación de huella dactilar -->
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottieFingerprint"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
             app:lottie_rawRes="@raw/fingerprint_biometric_scan"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"

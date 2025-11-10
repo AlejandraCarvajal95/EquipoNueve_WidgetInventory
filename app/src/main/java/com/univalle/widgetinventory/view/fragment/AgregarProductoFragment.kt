@@ -1,4 +1,4 @@
-package com.univalle.widgetinventory.ui.productos
+package com.univalle.widgetinventory.view.fragment
 
 import android.os.Bundle
 import android.text.Editable
@@ -10,9 +10,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels // Importa la delegación de ViewModels
 import androidx.navigation.fragment.findNavController
-import com.univalle.widgetinventory.R
 import com.univalle.widgetinventory.databinding.FragmentAgregarProductoBinding
-import com.univalle.widgetinventory.ui.productos.agregar.AgregarProductoViewModel // Asegúrate de tener esta importación
+import com.univalle.widgetinventory.viewModel.AgregarProductoViewModel // Asegúrate de tener esta importación
 
 class AgregarProductoFragment : Fragment() {
 

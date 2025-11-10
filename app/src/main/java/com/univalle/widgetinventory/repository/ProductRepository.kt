@@ -1,6 +1,8 @@
-package com.univalle.widgetinventory.data
+package com.univalle.widgetinventory.repository
 
 import android.content.Context
+import com.univalle.widgetinventory.data.AppDatabase
+import com.univalle.widgetinventory.data.ProductsDAO
 import com.univalle.widgetinventory.model.ProductEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
