@@ -52,6 +52,7 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation("com.airbnb.android:lottie:6.7.1")
+    implementation("androidx.biometric:biometric:1.1.0")
     implementation("androidx.room:room-runtime:2.8.3")
     kapt("androidx.room:room-compiler:2.8.3")
     implementation("androidx.room:room-ktx:2.8.3")
