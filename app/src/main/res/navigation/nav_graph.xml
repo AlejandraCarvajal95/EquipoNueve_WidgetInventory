@@ -6,16 +6,6 @@
     app:startDestination="@id/loginFragment">
 
     <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.univalle.widgetinventory.view.fragment.LoginFragment"
-        android:label="Login"
-        tools:layout="@layout/fragment_login">
-        <action
-            android:id="@+id/action_loginFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
-    </fragment>
-
-    <fragment
         android:id="@+id/homeFragment"
         android:name="com.univalle.widgetinventory.view.fragment.HomeFragment"
         android:label="Home"
@@ -31,5 +21,17 @@
         android:label="Agregar"
         tools:layout="@layout/fragment_agregar_producto">
     </fragment>
+    <navigation android:id="@+id/navigation"
+        app:startDestination="@id/loginFragment">
+        <fragment
+            android:id="@+id/loginFragment"
+            android:name="com.univalle.widgetinventory.view.fragment.LoginFragment"
+            android:label="Login"
+            tools:layout="@layout/fragment_login">
+            <action
+                android:id="@+id/action_loginFragment_to_homeFragment"
+                app:destination="@id/homeFragment" />
+        </fragment>
+    </navigation>
 
 </navigation>

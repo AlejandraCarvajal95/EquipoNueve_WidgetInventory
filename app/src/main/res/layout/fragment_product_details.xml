@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/detalleProductoToolbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:title="Detalle Producto"
+            app:navigationIcon="@android:drawable/ic_menu_revert"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/tvCodigoProducto"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Código"
+            app:layout_constraintTop_toBottomOf="@id/detalleProductoToolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="16dp"/>
+
+        <TextView
+            android:id="@+id/tvNombreProducto"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Nombre"
+            app:layout_constraintTop_toBottomOf="@id/tvCodigoProducto"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="16dp"/>
+
+        <TextView
+            android:id="@+id/tvPrecioProducto"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Precio"
+            app:layout_constraintTop_toBottomOf="@id/tvNombreProducto"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="16dp"/>
+
+        <TextView
+            android:id="@+id/tvCantidadProducto"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Cantidad"
+            app:layout_constraintTop_toBottomOf="@id/tvPrecioProducto"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:padding="16dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
