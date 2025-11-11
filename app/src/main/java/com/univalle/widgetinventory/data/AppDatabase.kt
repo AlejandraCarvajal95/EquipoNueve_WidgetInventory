@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.univalle.widgetinventory.model.ProductEntity
 import com.univalle.widgetinventory.utils.Constants.NAME_BD
-@Database(entities = [ProductEntity::class], version = 1)
+@Database(entities = [ProductEntity::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun productsDao(): ProductsDAO
