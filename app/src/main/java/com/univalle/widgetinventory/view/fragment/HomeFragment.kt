@@ -67,7 +67,7 @@ class HomeFragment : Fragment() {
     private fun controladores() {
         binding.fbagregar.setOnClickListener {
             // Ir a la pantalla de agregar producto
-            // findNavController().navigate(R.id.action_homeInventoryFragment_to_addItemFragment)
+            findNavController().navigate(R.id.action_homeFragment_to_agregarProductoFragment)
         }
     }
 

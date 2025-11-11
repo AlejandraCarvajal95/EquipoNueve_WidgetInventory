@@ -49,8 +49,7 @@
             android:defaultValue="0" />
     </fragment>
 
-    <navigation android:id="@+id/navigation"
-        app:startDestination="@id/loginFragment">
+
         <fragment
             android:id="@+id/loginFragment"
             android:name="com.univalle.widgetinventory.view.fragment.LoginFragment"
@@ -60,6 +59,6 @@
                 android:id="@+id/action_loginFragment_to_homeFragment"
                 app:destination="@id/homeFragment" />
         </fragment>
-    </navigation>
+
 
 </navigation>

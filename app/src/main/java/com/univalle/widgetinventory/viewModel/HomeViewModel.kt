@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.univalle.widgetinventory.repository.ProductRepository
 import com.univalle.widgetinventory.model.ProductEntity
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
@@ -23,8 +24,10 @@ class HomeViewModel(application: Application) : AndroidViewModel(application)  {
         //Ejecuta la operación de base de datos en un hilo secundario (Coroutines)
         viewModelScope.launch {
             try {
+                _progresState.value = true  // Mostrar ProgressBar
+                delay(2000)  // Simular carga de 2 segundos 
                 _productos.value = repository.getAllProducts().toMutableList()
-                _progresState.value = false
+                _progresState.value = false  // Ocultar ProgressBar
             } catch (e: Exception) {
                 _progresState.value = false
             }

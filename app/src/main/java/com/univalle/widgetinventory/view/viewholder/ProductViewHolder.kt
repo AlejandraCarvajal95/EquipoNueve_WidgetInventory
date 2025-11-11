@@ -1,9 +1,13 @@
 package com.univalle.widgetinventory.view.viewholder
 
+import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
+import com.univalle.widgetinventory.R
 import com.univalle.widgetinventory.databinding.ItemProductBinding
 import com.univalle.widgetinventory.model.ProductEntity
+import java.text.NumberFormat
+import java.util.Locale
 
 class ProductViewHolder(private val binding: ItemProductBinding, navController: NavController) :
     RecyclerView.ViewHolder(binding.root) {
@@ -14,13 +18,18 @@ class ProductViewHolder(private val binding: ItemProductBinding, navController: 
     fun setItemProduct(product: ProductEntity) {
         // Mostrar datos del producto
         binding.tvProductName.text = product.nombre
-        binding.tvProductPrice.text = "$${product.precio}"
-        binding.tvProductId.text = "${product.codigo}"
+        
+        // Formatear precio en formato colombiano
+        val formatoColombia = NumberFormat.getCurrencyInstance(Locale("es", "CO"))
+        binding.tvProductPrice.text = formatoColombia.format(product.precio)
+        
+        binding.tvProductId.text = "Id: ${product.codigo}"
 
-        // (Opcional) Hacer la tarjeta clickeable
-        // binding.cvProduct.setOnClickListener {
-        //     // Aquí puedes agregar lógica de navegación después
-        // }
+        // Hacer la tarjeta clickeable para ir a detalle
+        binding.cvProduct.setOnClickListener {
+            val bundle = bundleOf("product_id" to product.codigo)
+            navController.navigate(R.id.action_homeFragment_to_detalleProductoFragment, bundle)
+        }
     }
 }
 
