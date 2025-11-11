@@ -25,7 +25,7 @@ class HomeViewModel(application: Application) : AndroidViewModel(application)  {
         viewModelScope.launch {
             try {
                 _progresState.value = true  // Mostrar ProgressBar
-                delay(2000)  // Simular carga de 2 segundos 
+                delay(2000)  // Simular carga de 2 segundos
                 _productos.value = repository.getAllProducts().toMutableList()
                 _progresState.value = false  // Ocultar ProgressBar
             } catch (e: Exception) {
