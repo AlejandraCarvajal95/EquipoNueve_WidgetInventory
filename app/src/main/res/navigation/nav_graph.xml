@@ -13,14 +13,42 @@
         <action
             android:id="@+id/action_homeFragment_to_agregarProductoFragment"
             app:destination="@id/agregarProductoFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_detalleProductoFragment"
+            app:destination="@id/detalleProductoFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/agregarProductoFragment"
         android:name="com.univalle.widgetinventory.view.fragment.AgregarProductoFragment"
         android:label="Agregar"
-        tools:layout="@layout/fragment_agregar_producto">
+        tools:layout="@layout/fragment_agregar_producto" />
+
+    <fragment
+        android:id="@+id/detalleProductoFragment"
+        android:name="com.univalle.widgetinventory.view.fragment.DetalleProductoFragment"
+        android:label="Detalle"
+        tools:layout="@layout/fragment_product_details">
+        <argument
+            android:name="product_id"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <action
+            android:id="@+id/action_detalleProductoFragment_to_editarProductoFragment"
+            app:destination="@id/editarProductoFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/editarProductoFragment"
+        android:name="com.univalle.widgetinventory.view.fragment.EditarProductoFragment"
+        android:label="Editar"
+        tools:layout="@layout/fragment_editar_producto">
+        <argument
+            android:name="product_id"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+
     <navigation android:id="@+id/navigation"
         app:startDestination="@id/loginFragment">
         <fragment
