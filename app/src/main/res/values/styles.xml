@@ -22,4 +22,13 @@
         <item name="colorControlHighlight">#FFFFFF50</item>
     </style>
 
+    <style name="WidgetInventory.M3.Card"
+        parent="Widget.Material3.CardView.Elevated">
+
+        <item name="backgroundTint">@color/white</item>
+
+        <item name="cornerRadius">12dp</item>
+
+    </style>
+
 </resources>
