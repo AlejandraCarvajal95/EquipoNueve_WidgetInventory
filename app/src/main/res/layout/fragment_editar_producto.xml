@@ -4,15 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true">
 
-    <data>
-        <variable
-            name="viewModel"
-            type="com.univalle.widgetinventory.viewModel.EditarProductoViewModel" />
-        <variable
-            name="handler"
-            type="com.univalle.widgetinventory.view.fragment.EditarProductoFragment" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

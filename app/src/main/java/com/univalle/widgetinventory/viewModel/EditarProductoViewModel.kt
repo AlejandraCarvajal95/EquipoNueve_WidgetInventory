@@ -21,8 +21,13 @@ class EditarProductoViewModel(application: Application) : AndroidViewModel(appli
 
     fun cargarProducto(codigo: Int) {
         viewModelScope.launch {
-            val productoCargado = repository.getProductByID(codigo)
-            _producto.postValue(productoCargado)
+            try {
+                val productoCargado = repository.getProductByID(codigo)
+                _producto.postValue(productoCargado)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                // Si hay error, no actualizamos el producto
+            }
         }
     }
 

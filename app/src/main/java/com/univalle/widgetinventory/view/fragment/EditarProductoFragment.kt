@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.univalle.widgetinventory.R
 import com.univalle.widgetinventory.databinding.FragmentEditarProductoBinding
 import com.univalle.widgetinventory.viewModel.EditarProductoViewModel
 
@@ -35,11 +36,6 @@ class EditarProductoFragment : Fragment() {
 
         // Obtener el ID del producto desde los argumentos
         productId = arguments?.getInt("product_id") ?: 0
-
-        // Configurar DataBinding
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.viewModel = viewModel
-        binding.handler = this
 
         // Cargar el producto
         if (productId != 0) {
