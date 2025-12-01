@@ -67,8 +67,17 @@ class WidgetProvider : AppWidgetProvider() {
         val maskedKey = PREF_MASKED + appWidgetId
         val masked = prefs.getBoolean(maskedKey, true)
 
-    // Set up the RemoteViews
-        val views = RemoteViews(context.packageName, R.layout.widget_layout)
+        // Choose layout size based on current widget width
+        val options = appWidgetManager.getAppWidgetOptions(appWidgetId)
+        val minWidth = options?.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH) ?: 0
+        val layoutId = when {
+            minWidth >= 300 -> R.layout.widget_layout_large
+            minWidth >= 220 -> R.layout.widget_layout_medium
+            else -> R.layout.widget_layout
+        }
+
+        // Set up the RemoteViews
+        val views = RemoteViews(context.packageName, layoutId)
 
         // Default: show masked
         views.setTextViewText(R.id.tv_balance, "$****")
