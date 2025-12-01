@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "474505370576",
+    "project_id": "equiponuevewidgetinventory",
+    "storage_bucket": "equiponuevewidgetinventory.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:474505370576:android:8c47acf6d4343d3f54b7d5",
+        "android_client_info": {
+          "package_name": "com.univalle.widgetinventory"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqBaGnVzygPX7sxBZ_LnO-oQksTmHdXJc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
