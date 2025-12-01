@@ -82,8 +82,17 @@ class WidgetProvider : AppWidgetProvider() {
         val togglePI = PendingIntent.getBroadcast(context, appWidgetId, toggleIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
         views.setOnClickPendingIntent(R.id.iv_eye, togglePI)
 
-        val manageIntent = Intent(context, WidgetProvider::class.java).apply { action = ACTION_MANAGE }
-        val managePI = PendingIntent.getBroadcast(context, appWidgetId + 100000, manageIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+        // Prefer launching activity directly for reliability after process death
+        val manageActivityIntent = Intent(context, com.univalle.widgetinventory.MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            putExtra("open_login", true)
+        }
+        val managePI = PendingIntent.getActivity(
+            context,
+            appWidgetId + 100000,
+            manageActivityIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
         views.setOnClickPendingIntent(R.id.iv_manage, managePI)
         views.setOnClickPendingIntent(R.id.tv_manage, managePI)
 
