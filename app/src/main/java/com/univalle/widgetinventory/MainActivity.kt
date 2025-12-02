@@ -29,6 +29,12 @@ class MainActivity : AppCompatActivity() {
         
         // Si NO está logueado, ir a LoginActivity
         if (!isLoggedIn) {
+            // Verificar si venimos del widget
+            val openedFromWidget = sharedPreferences.getBoolean("opened_from_widget", false)
+            if (openedFromWidget) {
+                // Mantener la bandera para que LoginActivity la procese
+                // No hacer nada aquí, solo redirigir
+            }
             val intent = Intent(this, com.univalle.widgetinventory.view.LoginActivity::class.java)
             startActivity(intent)
             finish()

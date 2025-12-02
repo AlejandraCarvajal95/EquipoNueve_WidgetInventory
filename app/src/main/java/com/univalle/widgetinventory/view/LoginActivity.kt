@@ -129,10 +129,36 @@ class LoginActivity : AppCompatActivity() {
     
     private fun goToHome() {
         sharedPreferences.edit().putBoolean("is_logged_in", true).apply()
-        val intent = Intent(this, MainActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(intent)
-        finish()
+        
+        // Verificar si venimos del widget
+        val openedFromWidget = sharedPreferences.getBoolean("opened_from_widget", false)
+        
+        if (openedFromWidget) {
+            // Limpiar la bandera
+            sharedPreferences.edit().putBoolean("opened_from_widget", false).apply()
+            
+            // Actualizar todos los widgets
+            try {
+                val mgr = android.appwidget.AppWidgetManager.getInstance(this)
+                val cn = android.content.ComponentName(this, com.univalle.widgetinventory.widget.WidgetProvider::class.java)
+                val ids = mgr.getAppWidgetIds(cn)
+                if (ids != null && ids.isNotEmpty()) {
+                    val updateIntent = Intent(this, com.univalle.widgetinventory.widget.WidgetProvider::class.java)
+                    updateIntent.action = android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE
+                    updateIntent.putExtra(android.appwidget.AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
+                    sendBroadcast(updateIntent)
+                }
+            } catch (_: Exception) {}
+            
+            // Cerrar la actividad para volver al widget
+            finish()
+        } else {
+            // Flujo normal: ir a MainActivity
+            val intent = Intent(this, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
+        }
     }
     
     private fun loginUser() {
