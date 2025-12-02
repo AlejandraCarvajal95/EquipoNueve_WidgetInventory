@@ -24,22 +24,18 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
 
         // Verificar sesión
-        val sharedPreferences = getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        val sharedPreferences = getSharedPreferences("shared", Context.MODE_PRIVATE)
         val isLoggedIn = sharedPreferences.getBoolean("is_logged_in", false)
-        // obtener el NavController
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
-
-        // Si la sesión está iniciada, ir a Home
-        if (isLoggedIn) {
-            navController.navigate(R.id.homeFragment)
+        
+        // Si NO está logueado, ir a LoginActivity
+        if (!isLoggedIn) {
+            val intent = Intent(this, com.univalle.widgetinventory.view.LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+            return
         }
-
-        // Si la Activity fue iniciada desde el widget para abrir login, navegar a loginFragment
-        val openLogin = intent?.getBooleanExtra("open_login", false) ?: false
-        if (openLogin) {
-            navController.navigate(R.id.loginFragment)
-        }
+        
+        // Si está logueado, continuar con la navegación normal (HomeFragment por defecto)
 
         // Force widget update on app start so widgets pick up current DB values
         try {

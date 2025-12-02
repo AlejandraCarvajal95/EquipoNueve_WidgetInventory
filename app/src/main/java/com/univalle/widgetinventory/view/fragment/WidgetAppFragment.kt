@@ -60,7 +60,10 @@ class WidgetAppFragment : Fragment() {
 		// Navigate to login when manage clicked
 		val navigateToLogin = View.OnClickListener {
 			try {
-				findNavController().navigate(R.id.loginFragment)
+				val intent = android.content.Intent(requireContext(), com.univalle.widgetinventory.view.LoginActivity::class.java)
+				intent.flags = android.content.Intent.FLAG_ACTIVITY_NEW_TASK or android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
+				startActivity(intent)
+				requireActivity().finish()
 			} catch (e: Exception) {
 				// ignore if navigation fails
 			}

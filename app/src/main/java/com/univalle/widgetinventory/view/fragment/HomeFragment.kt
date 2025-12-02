@@ -50,9 +50,13 @@ class HomeFragment : Fragment() {
     private fun onExit() {
 
         // lleva a login
-        val sharedPreferences = requireContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        val sharedPreferences = requireContext().getSharedPreferences("shared", Context.MODE_PRIVATE)
         sharedPreferences.edit().remove("is_logged_in").apply()
-        findNavController().navigate(R.id.loginFragment)
+        
+        val intent = android.content.Intent(requireContext(), com.univalle.widgetinventory.view.LoginActivity::class.java)
+        intent.flags = android.content.Intent.FLAG_ACTIVITY_NEW_TASK or android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        requireActivity().finish()
     }
 
     private fun setupBackButton() {
