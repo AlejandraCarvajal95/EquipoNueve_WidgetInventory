@@ -7,13 +7,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.univalle.widgetinventory.model.ProductEntity
 import com.univalle.widgetinventory.repository.ProductRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
+import javax.inject.Inject
 
 // ViewModel responsible for widget fragment state and computing the total inventory
-class WidgetAppModel(application: Application) : AndroidViewModel(application) {
-	private val repository = ProductRepository(application.applicationContext)
+@HiltViewModel
+class WidgetAppModel @Inject constructor(
+	application: Application,
+	private val repository: ProductRepository
+) : AndroidViewModel(application) {
 
 	private val _balance = MutableLiveData<String>("$****")
 	val balance: LiveData<String> = _balance

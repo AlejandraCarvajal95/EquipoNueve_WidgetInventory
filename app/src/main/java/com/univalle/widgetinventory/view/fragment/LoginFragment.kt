@@ -11,7 +11,9 @@ import androidx.core.content.ContextCompat
 import androidx.biometric.BiometricPrompt
 import androidx.biometric.BiometricManager
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginFragment : Fragment(R.layout.fragment_login) {
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)

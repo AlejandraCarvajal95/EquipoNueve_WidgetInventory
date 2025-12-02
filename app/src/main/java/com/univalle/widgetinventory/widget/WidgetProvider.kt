@@ -90,7 +90,9 @@ class WidgetProvider : AppWidgetProvider() {
         // Load products and compute total asynchronously
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val repo = ProductRepository(context)
+                val database = com.univalle.widgetinventory.data.AppDatabase.getDatabase(context)
+                val dao = database.productsDao()
+                val repo = ProductRepository(context, dao)
                 val products = repo.getAllProducts()
                 val total = products.fold(0.0) { acc, p -> acc + (p.precio * p.cantidad) }
                 Log.d("WidgetProvider", "Loaded ${products.size} products for widget $appWidgetId, total=$total")

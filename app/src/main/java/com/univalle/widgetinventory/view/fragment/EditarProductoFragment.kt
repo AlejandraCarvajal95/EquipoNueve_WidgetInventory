@@ -13,7 +13,9 @@ import androidx.navigation.fragment.findNavController
 import com.univalle.widgetinventory.R
 import com.univalle.widgetinventory.databinding.FragmentEditarProductoBinding
 import com.univalle.widgetinventory.viewModel.EditarProductoViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class EditarProductoFragment : Fragment() {
 
     private var _binding: FragmentEditarProductoBinding? = null

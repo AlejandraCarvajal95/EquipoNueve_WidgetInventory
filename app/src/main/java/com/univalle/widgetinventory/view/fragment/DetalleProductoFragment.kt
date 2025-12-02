@@ -11,7 +11,9 @@ import com.univalle.widgetinventory.R
 import com.univalle.widgetinventory.databinding.FragmentProductDetailsBinding
 import com.univalle.widgetinventory.viewModel.DetalleProductoViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DetalleProductoFragment : Fragment() {
     private var _binding: FragmentProductDetailsBinding? = null
     private val binding get() = _binding!!
