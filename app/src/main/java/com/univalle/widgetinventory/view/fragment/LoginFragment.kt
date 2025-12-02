@@ -18,6 +18,10 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.univalle.widgetinventory.R
 import androidx.navigation.fragment.findNavController
+import android.appwidget.AppWidgetManager
+import android.content.ComponentName
+import android.content.Intent
+import com.univalle.widgetinventory.widget.WidgetProvider
 import java.util.concurrent.Executor
 import com.airbnb.lottie.LottieAnimationView
 import dagger.hilt.android.AndroidEntryPoint
@@ -128,8 +132,27 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 					super.onAuthenticationSucceeded(result)
 					// Guardar sesión
 					val sharedPreferences = requireContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+					val openedFromWidget = sharedPreferences.getBoolean("opened_from_widget", false)
 					sharedPreferences.edit().putBoolean("is_logged_in", true).apply()
-					try { findNavController().navigate(R.id.action_loginFragment_to_homeFragment) } catch (_: Exception) {}
+					if (openedFromWidget) {
+						// Notify widget(s) to refresh and then close the activity so user returns to home screen where the widget lives
+						try {
+							val mgr = AppWidgetManager.getInstance(requireContext())
+							val cn = ComponentName(requireContext(), WidgetProvider::class.java)
+							val ids = mgr.getAppWidgetIds(cn)
+							if (ids != null && ids.isNotEmpty()) {
+								val updateIntent = Intent(requireContext(), WidgetProvider::class.java)
+								updateIntent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
+								updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
+								requireContext().sendBroadcast(updateIntent)
+							}
+						} catch (_: Exception) {}
+						// clear the flag and finish the host activity so the user sees the home screen/widget
+						sharedPreferences.edit().putBoolean("opened_from_widget", false).apply()
+						requireActivity().finish()
+					} else {
+						try { findNavController().navigate(R.id.action_loginFragment_to_homeFragment) } catch (_: Exception) {}
+					}
 				}
 
 				override fun onAuthenticationFailed() {

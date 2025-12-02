@@ -44,13 +44,24 @@ class WidgetProvider : AppWidgetProvider() {
         if (intent.action == ACTION_TOGGLE) {
             val appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1)
             if (appWidgetId != -1) {
-                val key = PREF_MASKED + appWidgetId
-                val masked = prefs.getBoolean(key, true)
-                prefs.edit().putBoolean(key, !masked).apply()
-                Log.d("WidgetProvider", "Toggled masked for widget $appWidgetId -> ${!masked}")
-                // update this widget
-                val mgr = AppWidgetManager.getInstance(context)
-                updateAppWidget(context, mgr, appWidgetId)
+                // Check if user is logged in; if not, open login flow
+                val appPrefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+                val isLoggedIn = appPrefs.getBoolean("is_logged_in", false)
+                if (!isLoggedIn) {
+                    Log.d("WidgetProvider", "User not logged in -> launching MainActivity for login")
+                    val i = Intent(context, com.univalle.widgetinventory.MainActivity::class.java)
+                    i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                    i.putExtra("open_login", true)
+                    context.startActivity(i)
+                } else {
+                    val key = PREF_MASKED + appWidgetId
+                    val masked = prefs.getBoolean(key, true)
+                    prefs.edit().putBoolean(key, !masked).apply()
+                    Log.d("WidgetProvider", "Toggled masked for widget $appWidgetId -> ${!masked}")
+                    // update this widget
+                    val mgr = AppWidgetManager.getInstance(context)
+                    updateAppWidget(context, mgr, appWidgetId)
+                }
             }
         } else if (intent.action == ACTION_MANAGE) {
             // Launch MainActivity with extra to open login
@@ -79,9 +90,9 @@ class WidgetProvider : AppWidgetProvider() {
         // Set up the RemoteViews
         val views = RemoteViews(context.packageName, layoutId)
 
-        // Default: show masked
+        // Default: show masked state by default (closed eye)
         views.setTextViewText(R.id.tv_balance, "$****")
-        views.setImageViewResource(R.id.iv_eye, R.drawable.ic_eye_open)
+        views.setImageViewResource(R.id.iv_eye, R.drawable.ic_eye_closed)
 
         // Setup pending intents for eye and manage
         val toggleIntent = Intent(context, WidgetProvider::class.java).apply {
@@ -121,10 +132,12 @@ class WidgetProvider : AppWidgetProvider() {
 
                 if (!masked) {
                     views.setTextViewText(R.id.tv_balance, "$" + formatted)
-                    views.setImageViewResource(R.id.iv_eye, R.drawable.ic_eye_closed)
+                    // when unmasked -> show open eye
+                    views.setImageViewResource(R.id.iv_eye, R.drawable.ic_eye_open)
                 } else {
                     views.setTextViewText(R.id.tv_balance, "$****")
-                    views.setImageViewResource(R.id.iv_eye, R.drawable.ic_eye_open)
+                    // when masked -> show closed eye
+                    views.setImageViewResource(R.id.iv_eye, R.drawable.ic_eye_closed)
                 }
 
             } catch (e: Exception) {

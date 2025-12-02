@@ -38,6 +38,8 @@ class MainActivity : AppCompatActivity() {
         // Si la Activity fue iniciada desde el widget para abrir login, navegar a loginFragment
         val openLogin = intent?.getBooleanExtra("open_login", false) ?: false
         if (openLogin) {
+            // Mark that the app was opened from the widget so LoginFragment can redirect back
+            sharedPreferences.edit().putBoolean("opened_from_widget", true).apply()
             navController.navigate(R.id.loginFragment)
         }
 
