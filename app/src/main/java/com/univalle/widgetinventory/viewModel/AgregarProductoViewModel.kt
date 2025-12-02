@@ -5,8 +5,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.univalle.widgetinventory.repository.ProductRepository
-import com.univalle.widgetinventory.model.ProductEntity
+import com.univalle.widgetinventory.model.ProductsFS
+import com.univalle.widgetinventory.repository.ProductRepositoryFS
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -14,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AgregarProductoViewModel @Inject constructor(
     application: Application,
-    private val repository: ProductRepository
+    private val repository: ProductRepositoryFS
 ) : AndroidViewModel(application) {
 
     private val _isSaved = MutableLiveData<Boolean>()
@@ -24,14 +24,14 @@ class AgregarProductoViewModel @Inject constructor(
         // Ejecuta la operación de base de datos en un hilo secundario (Coroutines)
         viewModelScope.launch {
             try {
-                val newProduct = ProductEntity(
+                val newProduct = ProductsFS(
                     codigo = codigo,
                     nombre = nombre,
                     precio = precio,
                     cantidad = cantidad,
                 )
 
-                repository.insertProduct(newProduct)
+                repository.createProduct(newProduct)
 
                 // Notificar al Fragment que la inserción fue exitosa
                 _isSaved.postValue(true)

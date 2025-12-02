@@ -3,7 +3,9 @@ package com.univalle.widgetinventory.viewModel
 import android.app.Application
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.univalle.widgetinventory.model.ProductEntity
+import com.univalle.widgetinventory.model.ProductsFS
 import com.univalle.widgetinventory.repository.ProductRepository
+import com.univalle.widgetinventory.repository.ProductRepositoryFS
 import kotlinx.coroutines.*
 import kotlinx.coroutines.test.*
 import org.mockito.Mockito.*
@@ -19,13 +21,13 @@ class WidgetAppModelTest {
 
     private val dispatcher = UnconfinedTestDispatcher()
 
-    private lateinit var repository: ProductRepository
+    private lateinit var repository: ProductRepositoryFS
     private lateinit var application: Application
 
     @Before
     fun setup() {
         Dispatchers.setMain(dispatcher)
-        repository = mock(ProductRepository::class.java)
+        repository = mock(ProductRepositoryFS::class.java)
         application = mock(Application::class.java)
     }
 
@@ -37,10 +39,10 @@ class WidgetAppModelTest {
     @Test
     fun `init carga productos y publica balance formateado`() = runTest(dispatcher) {
         val lista = listOf(
-            ProductEntity(1, "A", 1000.5, 2), // 2001.0
-            ProductEntity(2, "B", 10.0, 3)    //   30.0
+            ProductsFS(1, "A", 1000.5, 2), // 2001.0
+            ProductsFS(2, "B", 10.0, 3)    //   30.0
         )                                        // 2031.0
-        whenever(repository.getAllProducts()).thenReturn(lista)
+        whenever(repository.getProducts()).thenReturn(lista)
 
         val vm = WidgetAppModel(application, repository)
         // Balance inicial enmascarado por defecto
@@ -56,7 +58,7 @@ class WidgetAppModelTest {
 
     @Test
     fun `toggleMasked alterna entre oculto y visible`() = runTest(dispatcher) {
-        whenever(repository.getAllProducts()).thenReturn(listOf(ProductEntity(1, "A", 100.0, 1)))
+        whenever(repository.getProducts()).thenReturn(listOf(ProductsFS(1, "A", 100.0, 1)))
         val vm = WidgetAppModel(application, repository)
         advanceUntilIdle()
 
@@ -73,7 +75,7 @@ class WidgetAppModelTest {
 
     @Test
     fun `error al cargar establece total 0 y balance $0,00`() = runTest(dispatcher) {
-        whenever(repository.getAllProducts()).thenAnswer { throw RuntimeException("DB error") }
+        whenever(repository.getProducts()).thenAnswer { throw RuntimeException("DB error") }
         val vm = WidgetAppModel(application, repository)
 
         advanceUntilIdle()

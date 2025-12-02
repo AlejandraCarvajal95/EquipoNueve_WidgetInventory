@@ -5,8 +5,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.univalle.widgetinventory.model.ProductEntity
-import com.univalle.widgetinventory.repository.ProductRepository
+import com.univalle.widgetinventory.model.ProductsFS
+import com.univalle.widgetinventory.repository.ProductRepositoryFS
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.text.DecimalFormat
@@ -17,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class WidgetAppModel @Inject constructor(
 	application: Application,
-	private val repository: ProductRepository
+	private val repository: ProductRepositoryFS
 ) : AndroidViewModel(application) {
 
 	private val _balance = MutableLiveData<String>("$****")
@@ -43,14 +43,14 @@ class WidgetAppModel @Inject constructor(
 		return df.format(value)
 	}
 
-	private fun computeTotal(products: List<ProductEntity>): Double {
+	private fun computeTotal(products: List<ProductsFS>): Double {
 		return products.fold(0.0) { acc, p -> acc + (p.precio * p.cantidad) }
 	}
 
 	private fun loadTotal() {
 		viewModelScope.launch {
 			try {
-				val products = repository.getAllProducts()
+				val products = repository.getProducts()
 				rawTotal = computeTotal(products)
 				_balance.postValue("$" + formatAmount(rawTotal))
 			} catch (e: Exception) {

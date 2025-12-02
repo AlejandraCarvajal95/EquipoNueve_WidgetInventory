@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.univalle.widgetinventory.R
 import com.univalle.widgetinventory.databinding.FragmentProductDetailsBinding
 import com.univalle.widgetinventory.viewModel.DetalleProductoViewModel
@@ -20,6 +21,7 @@ class DetalleProductoFragment : Fragment() {
 
     private val viewModel: DetalleProductoViewModel by viewModels()
 
+    private val args: DetalleProductoFragmentArgs by navArgs()
     private var productId: Int = 0
 
     override fun onCreateView(
@@ -33,8 +35,7 @@ class DetalleProductoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        productId = arguments?.getInt("product_id") ?: 0
-
+        productId = arguments?.getInt("product_id") ?: 1
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
         binding.handler = this
@@ -58,8 +59,11 @@ class DetalleProductoFragment : Fragment() {
     }
 
     fun onEditClick() {
-        val bundle = Bundle().apply { putInt("product_id", productId) }
-        findNavController().navigate(R.id.editarProductoFragment, bundle)
+
+        val action = DetalleProductoFragmentDirections.actionDetalleProductoFragmentToEditarProductoFragment(
+            productId = productId
+        )
+        findNavController().navigate(action)
     }
 
     override fun onDestroyView() {
