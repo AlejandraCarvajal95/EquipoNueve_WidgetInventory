@@ -17,8 +17,10 @@ import com.univalle.widgetinventory.view.adapter.ProductAdapter
 import com.univalle.widgetinventory.viewModel.HomeViewModel
 import kotlin.getValue
 import androidx.core.view.isVisible
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private val viewModel: HomeViewModel by viewModels()

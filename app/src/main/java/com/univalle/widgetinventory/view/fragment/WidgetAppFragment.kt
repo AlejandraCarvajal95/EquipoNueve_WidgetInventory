@@ -12,8 +12,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.univalle.widgetinventory.R
 import com.univalle.widgetinventory.viewModel.WidgetAppModel
+import dagger.hilt.android.AndroidEntryPoint
 
 // Fragment that shows the widget UI inside the app (implements the requested UI criteria)
+@AndroidEntryPoint
 class WidgetAppFragment : Fragment() {
 
 	private lateinit var viewModel: WidgetAppModel

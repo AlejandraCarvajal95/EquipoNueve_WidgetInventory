@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    id("kotlin-kapt")
+    id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
     id("com.google.gms.google-services")
 }
@@ -57,7 +57,7 @@ dependencies {
     implementation("com.airbnb.android:lottie:6.7.1")
     implementation("androidx.biometric:biometric:1.1.0")
     implementation("androidx.room:room-runtime:2.8.3")
-    kapt("androidx.room:room-compiler:2.8.3")
+    ksp("androidx.room:room-compiler:2.8.3")
     implementation("androidx.room:room-ktx:2.8.3")
 
     // Firebase
@@ -66,8 +66,8 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore")
 
     // Hilt
-    implementation("com.google.dagger:hilt-android:2.48")
-    kapt("com.google.dagger:hilt-compiler:2.48")
+    implementation("com.google.dagger:hilt-android:2.52")
+    ksp("com.google.dagger:hilt-compiler:2.52")
 
     // Lifecycle / ViewModel
     //implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
