@@ -65,10 +65,10 @@ class LoginActivity : AppCompatActivity() {
                 val passOk = passLen >= 6
                 
                 // Error visual
-                binding.tilPassword.error = if (!passOk && passLen > 0) getString(R.string.min_6_digits) else null
+                binding.tilPassword.error = if (passLen > 0 && passLen < 6) "Mínimo 6 dígitos" else null
 
                 // Habilitar/Deshabilitar botones
-                val enable = emailFilled && passLen > 0
+                val enable = emailFilled && passOk
                 binding.btnLogin.isEnabled = enable
             }
             override fun afterTextChanged(s: Editable?) {}

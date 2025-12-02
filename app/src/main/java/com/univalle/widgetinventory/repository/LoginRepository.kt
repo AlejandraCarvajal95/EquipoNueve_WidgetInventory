@@ -25,24 +25,13 @@ class LoginRepository {
                                 )
                             )
                         } else {
-                            val error = task.exception
-                            if (error is FirebaseAuthUserCollisionException) {
-                                // Manejo específico cuando ya existe un mismo email registrado
-                                userResponse(
-                                    UserResponse(
-                                        isRegister = false,
-                                        message = "El usuario ya existe"
-                                    )
+                            // Cualquier error en el registro (incluido usuario existente)
+                            userResponse(
+                                UserResponse(
+                                    isRegister = false,
+                                    message = "Error en el registro"
                                 )
-                            } else {
-                                // Manejo de otros errores
-                                userResponse(
-                                    UserResponse(
-                                        isRegister = false,
-                                        message = "Error en el registro"
-                                    )
-                                )
-                            }
+                            )
                         }
                     }
             } catch (e: Exception) {
