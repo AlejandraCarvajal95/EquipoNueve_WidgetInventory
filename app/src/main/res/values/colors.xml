@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#CC000000</color>
+    <color name="pure_black">#000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="greyBackground">#1E282D</color>
     <color name="greyToolBar">#424242</color>
@@ -10,4 +11,6 @@
     <color name="naranja">#e7522e</color>
     <color name="darkOrange">#aa3d24</color>
     <color name="manage_orange">#FA8523</color>
+    <color name="greyTextRegister">#9EA1A1</color>
+    <color name="errorRed">#FF3B30</color>
 </resources>

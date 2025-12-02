@@ -8,4 +8,6 @@
     <string name="biometric_error">Autenticación biométrica no disponible</string>
     <string name="title_home">Inventario</string>
     <string name="descripcionExit">Salir</string>
+    <string name="min_6_digits">Mínimo 6 dígitos</string>
+    <string name="password_mismatch">Las contraseñas no coinciden</string>
 </resources>

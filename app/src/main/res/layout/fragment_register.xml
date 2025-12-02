@@ -7,11 +7,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/black"
-        tools:context=".view.fragment.LoginFragment">
+        tools:context=".view.fragment.RegisterFragment">
 
-        <!-- Logo de la app -->
         <ImageView
-            android:id="@+id/ivLogo"
+            android:id="@+id/ivLogoRegister"
             android:layout_width="96dp"
             android:layout_height="96dp"
             android:src="@mipmap/icon_inventory"
@@ -21,57 +20,35 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="32dp"/>
 
-        <!-- Ícono/animación de huella para autenticación biométrica -->
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/lottieFingerprint"
-            android:layout_width="72dp"
-            android:layout_height="72dp"
-            app:lottie_rawRes="@raw/fingerprint_biometric_scan"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            android:clickable="true"
-            android:focusable="true"
-            android:contentDescription="Autenticarse con huella"
-            app:layout_constraintTop_toBottomOf="@id/ivLogo"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp"/>
-
-        <!-- Campo Email -->
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilEmail"
+            android:id="@+id/tilEmailR"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="Email"
             app:boxStrokeColor="@color/white"
             app:boxStrokeWidth="2dp"
-            app:boxStrokeWidthFocused="3dp"
             app:hintTextColor="@color/white"
             app:startIconTint="@color/white"
-            app:endIconTint="@color/white"
-            app:layout_constraintTop_toBottomOf="@id/lottieFingerprint"
+            app:layout_constraintTop_toBottomOf="@id/ivLogoRegister"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="28dp">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etEmail"
+                android:id="@+id/etEmailR"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="40"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
                 android:inputType="textEmailAddress"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Campo Password con ícono de ojo a la izquierda -->
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilPassword"
+            android:id="@+id/tilPasswordR"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -80,11 +57,9 @@
             app:startIconTint="@color/white"
             app:boxStrokeColor="@color/white"
             app:boxStrokeWidth="2dp"
-            app:boxStrokeWidthFocused="3dp"
             app:hintTextColor="@color/white"
             app:errorTextColor="@color/errorRed"
-            app:boxStrokeErrorColor="@color/errorRed"
-            app:layout_constraintTop_toBottomOf="@id/tilEmail"
+            app:layout_constraintTop_toBottomOf="@id/tilEmailR"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginStart="24dp"
@@ -92,63 +67,71 @@
             android:layout_marginTop="18dp">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etPassword"
+                android:id="@+id/etPasswordR"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="10"
                 android:inputType="numberPassword"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"/>
+                android:textColorHint="@color/white"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Botón Biometría (huella) -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnBiometric"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        <!-- Repetir Password -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilPasswordRepeatR"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:text="Usar huella"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            app:strokeColor="@color/white"
-            app:cornerRadius="16dp"
-            app:layout_constraintTop_toBottomOf="@id/tilPassword"
+            android:layout_height="wrap_content"
+            android:hint="Repetir Password"
+            app:startIconDrawable="@drawable/ic_eye_open"
+            app:startIconTint="@color/white"
+            app:boxStrokeColor="@color/white"
+            app:boxStrokeWidth="2dp"
+            app:hintTextColor="@color/white"
+            app:errorTextColor="@color/errorRed"
+            app:layout_constraintTop_toBottomOf="@id/tilPasswordR"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
-            android:layout_marginTop="16dp"/>
+            android:layout_marginTop="18dp">
 
-        <!-- Botón Login -->
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPasswordRepeatR"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="10"
+                android:inputType="numberPassword"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnLogin"
+            android:id="@+id/btnRegister"
             android:layout_width="0dp"
             android:layout_height="48dp"
-            android:text="Login"
+            android:text="Registrarse"
             android:textStyle="bold"
             android:textColor="@color/text_button_color_selector"
             app:backgroundTint="@color/button_bg_tint_selector"
             app:cornerRadius="16dp"
             android:enabled="false"
-            app:layout_constraintTop_toBottomOf="@id/btnBiometric"
+            app:layout_constraintTop_toBottomOf="@id/tilPasswordRepeatR"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             android:layout_marginTop="24dp"/>
 
-        <!-- Texto Registrarse -->
         <TextView
-            android:id="@+id/tvRegister"
+            android:id="@+id/tvGoLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Registrarse"
+            android:text="Iniciar sesión"
             android:textColor="@color/greyTextRegister"
             android:textStyle="bold"
             android:enabled="false"
-            app:layout_constraintTop_toBottomOf="@id/btnLogin"
+            app:layout_constraintTop_toBottomOf="@id/btnRegister"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="16dp"/>
