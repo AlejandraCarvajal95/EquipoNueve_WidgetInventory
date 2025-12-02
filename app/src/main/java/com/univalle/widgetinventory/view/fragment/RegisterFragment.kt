@@ -83,7 +83,10 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
         }
         tvGoLogin.setOnClickListener {
             if (tvGoLogin.isEnabled) {
-                try { findNavController().navigate(R.id.loginFragment) } catch (_: Exception) {}
+                val intent = android.content.Intent(requireContext(), com.univalle.widgetinventory.view.LoginActivity::class.java)
+                intent.flags = android.content.Intent.FLAG_ACTIVITY_NEW_TASK or android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                requireActivity().finish()
             }
         }
     }

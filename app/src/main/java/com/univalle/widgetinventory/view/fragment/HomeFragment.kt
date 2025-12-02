@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -28,7 +27,7 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentHomeBinding.inflate(inflater)
         binding.lifecycleOwner = this
         return binding.root
@@ -48,11 +47,18 @@ class HomeFragment : Fragment() {
     }
 
     private fun onExit() {
-
-        // lleva a login
-        val sharedPreferences = requireContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-        sharedPreferences.edit().remove("is_logged_in").apply()
-        findNavController().navigate(R.id.loginFragment)
+        // Cerrar sesión de Firebase
+        com.google.firebase.auth.FirebaseAuth.getInstance().signOut()
+        
+        // Limpiar SharedPreferences completamente
+        val sharedPreferences = requireContext().getSharedPreferences("shared", Context.MODE_PRIVATE)
+        sharedPreferences.edit().clear().apply()
+        
+        // Redirigir a LoginActivity
+        val intent = android.content.Intent(requireContext(), com.univalle.widgetinventory.view.LoginActivity::class.java)
+        intent.flags = android.content.Intent.FLAG_ACTIVITY_NEW_TASK or android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        requireActivity().finish()
     }
 
     private fun setupBackButton() {

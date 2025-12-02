@@ -2,8 +2,8 @@ package com.univalle.widgetinventory.viewModel
 
 import android.app.Application
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.univalle.widgetinventory.model.ProductEntity
-import com.univalle.widgetinventory.repository.ProductRepository
+import com.univalle.widgetinventory.model.ProductsFS
+import com.univalle.widgetinventory.repository.ProductRepositoryFS
 import kotlinx.coroutines.*
 import kotlinx.coroutines.test.*
 import org.mockito.Mockito.*
@@ -19,13 +19,13 @@ class HomeViewModelTest {
 
     private val dispatcher = UnconfinedTestDispatcher()
 
-    private lateinit var repository: ProductRepository
+    private lateinit var repository: ProductRepositoryFS
     private lateinit var application: Application
 
     @Before
     fun setUp() {
         Dispatchers.setMain(dispatcher)
-        repository = mock(ProductRepository::class.java)
+        repository = mock(ProductRepositoryFS::class.java)
         application = mock(Application::class.java)
     }
 
@@ -38,10 +38,10 @@ class HomeViewModelTest {
     fun `getProducts actualiza progresState y productos correctamente`() = runTest(dispatcher) {
         // Datos simulados
         val lista = listOf(
-            ProductEntity(codigo = 1, nombre = "Producto A", precio = 10.0, cantidad = 2),
-            ProductEntity(codigo = 2, nombre = "Producto B", precio = 5.5, cantidad = 4)
+            ProductsFS(codigo = 1, nombre = "Producto A", precio = 10.0, cantidad = 2),
+            ProductsFS(codigo = 2, nombre = "Producto B", precio = 5.5, cantidad = 4)
         )
-        whenever(repository.getAllProducts()).thenReturn(lista)
+        whenever(repository.getProducts()).thenReturn(lista)
 
         val viewModel = HomeViewModel(application, repository)
 
@@ -68,7 +68,7 @@ class HomeViewModelTest {
 
     @Test
     fun `getProducts maneja excepcion y oculta progreso`() = runTest(dispatcher) {
-        whenever(repository.getAllProducts()).thenThrow(RuntimeException("DB error"))
+        whenever(repository.getProducts()).thenThrow(RuntimeException("DB error"))
         val viewModel = HomeViewModel(application, repository)
 
         viewModel.getProducts()

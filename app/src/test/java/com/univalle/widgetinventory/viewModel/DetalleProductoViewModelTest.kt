@@ -3,7 +3,9 @@ package com.univalle.widgetinventory.viewModel
 import android.app.Application
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.univalle.widgetinventory.model.ProductEntity
+import com.univalle.widgetinventory.model.ProductsFS
 import com.univalle.widgetinventory.repository.ProductRepository
+import com.univalle.widgetinventory.repository.ProductRepositoryFS
 import kotlinx.coroutines.*
 import kotlinx.coroutines.test.*
 import org.mockito.kotlin.verify
@@ -20,13 +22,13 @@ class DetalleProductoViewModelTest {
 
     private val dispatcher = UnconfinedTestDispatcher()
 
-    private lateinit var repository: ProductRepository
+    private lateinit var repository: ProductRepositoryFS
     private lateinit var application: Application
 
     @Before
     fun setup() {
         Dispatchers.setMain(dispatcher)
-        repository = mock(ProductRepository::class.java)
+        repository = mock(ProductRepositoryFS::class.java)
         application = mock(Application::class.java)
     }
 
@@ -38,8 +40,8 @@ class DetalleProductoViewModelTest {
     @Test
     fun `cargarProducto publica el producto obtenido del repositorio`() = runTest(dispatcher) {
         val codigo = 123
-        val entity = ProductEntity(codigo = codigo, nombre = "ProductoPrueba", precio = 9.99, cantidad = 3)
-        whenever(repository.getProductByID(codigo)).thenReturn(entity)
+        val entity = ProductsFS(codigo = codigo, nombre = "ProductoPrueba", precio = 9.99, cantidad = 3)
+        whenever(repository.getProductByCode(codigo)).thenReturn(entity)
 
         val vm = DetalleProductoViewModel(application, repository)
         assertNull(vm.producto.value)

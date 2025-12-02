@@ -5,8 +5,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.univalle.widgetinventory.repository.ProductRepository
-import com.univalle.widgetinventory.model.ProductEntity
+import com.univalle.widgetinventory.model.ProductsFS
+import com.univalle.widgetinventory.repository.ProductRepositoryFS
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -14,41 +14,41 @@ import javax.inject.Inject
 @HiltViewModel
 class EditarProductoViewModel @Inject constructor(
     application: Application,
-    private val repository: ProductRepository
+    private val repository: ProductRepositoryFS
 ) : AndroidViewModel(application) {
+    private val _producto = MutableLiveData<ProductsFS?>()
+    val producto: LiveData<ProductsFS?> = _producto
 
-    private val _producto = MutableLiveData<ProductEntity>()
-    val producto: LiveData<ProductEntity> = _producto
+    private val _isUpdated = MutableLiveData<Boolean?>()
+    val isUpdated: LiveData<Boolean?> = _isUpdated
 
-    private val _isUpdated = MutableLiveData<Boolean>()
-    val isUpdated: LiveData<Boolean> = _isUpdated
+    var currentProduct: ProductsFS? = null
 
     fun cargarProducto(codigo: Int) {
         viewModelScope.launch {
             try {
-                val productoCargado = repository.getProductByID(codigo)
+                val productoCargado = repository.getProductByCode(codigo)
+
                 _producto.postValue(productoCargado)
+
+                currentProduct = productoCargado
+
             } catch (e: Exception) {
                 e.printStackTrace()
-                // Si hay error, no actualizamos el producto
+                _producto.postValue(null)
             }
         }
     }
 
-    fun updateProduct(codigo: Int, nombre: String, precio: Double, cantidad: Int) {
+    fun editarProducto(product: ProductsFS) {
         viewModelScope.launch {
             try {
-                val updatedProduct = ProductEntity(
-                    codigo = codigo,
-                    nombre = nombre,
-                    precio = precio,
-                    cantidad = cantidad,
-                )
+                val success = repository.updateProduct(product)
+                _isUpdated.postValue(success)
 
-                repository.updateProduct(updatedProduct)
-
-                // Notificar al Fragment que la actualización fue exitosa
-                _isUpdated.postValue(true)
+                if (success) {
+                    currentProduct = product
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
                 _isUpdated.postValue(false)
@@ -56,4 +56,3 @@ class EditarProductoViewModel @Inject constructor(
         }
     }
 }
-

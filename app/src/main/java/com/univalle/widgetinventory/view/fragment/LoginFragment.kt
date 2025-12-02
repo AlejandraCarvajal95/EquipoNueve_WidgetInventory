@@ -1,4 +1,5 @@
-package com.univalle.widgetinventory.view.fragment
+/*package com.univalle.widgetinventory.view.fragment
+
 
 import android.os.Bundle
 import android.text.Editable
@@ -7,31 +8,28 @@ import android.text.method.PasswordTransformationMethod
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.content.Context
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.biometric.BiometricManager
-import androidx.biometric.BiometricPrompt
-import androidx.core.content.ContextCompat.getMainExecutor
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.univalle.widgetinventory.R
 import androidx.navigation.fragment.findNavController
+<<<<<<< HEAD
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Intent
 import com.univalle.widgetinventory.widget.WidgetProvider
 import java.util.concurrent.Executor
 import com.airbnb.lottie.LottieAnimationView
+=======
+>>>>>>> develop
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
 class LoginFragment : Fragment(R.layout.fragment_login) {
 	private var eyeOpen = true
-	private var biometricPrompt: BiometricPrompt? = null
-	private var promptInfo: BiometricPrompt.PromptInfo? = null
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
@@ -42,8 +40,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 		val etPassword = view.findViewById<TextInputEditText>(R.id.etPassword)
 		val btnLogin = view.findViewById<MaterialButton>(R.id.btnLogin)
 		val tvRegister = view.findViewById<View>(R.id.tvRegister)
-		val btnBiometric = view.findViewById<MaterialButton>(R.id.btnBiometric)
-		val lottieFingerprint = view.findViewById<LottieAnimationView>(R.id.lottieFingerprint)
 
 		// Toggle de visibilidad con ícono a la izquierda
 		tilPassword.setStartIconOnClickListener {
@@ -89,24 +85,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 			imm.showSoftInput(etEmail, InputMethodManager.SHOW_IMPLICIT)
 		}
 
-		// Configurar biometría: solo lanzar cuando el usuario toca la huella
-		val canAuth = BiometricManager.from(requireContext())
-			.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_STRONG)
-		if (canAuth == BiometricManager.BIOMETRIC_SUCCESS) {
-			setupBiometric()
-			lottieFingerprint.visibility = View.VISIBLE
-		} else {
-			lottieFingerprint.visibility = View.GONE
-		}
-
-		// Preferimos el ícono de huella; ocultamos el botón auxiliar si existe
-		btnBiometric.visibility = View.GONE
-
-		lottieFingerprint.setOnClickListener {
-			if (promptInfo == null) setupBiometric()
-			biometricPrompt?.authenticate(requireNotNull(promptInfo))
-		}
-
 		// Navegación básica de UI (solo front): ir a Home cuando están habilitados
 		btnLogin.setOnClickListener {
 			if (btnLogin.isEnabled) {
@@ -118,6 +96,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 			try { findNavController().navigate(R.id.action_loginFragment_to_registerFragment) } catch (_: Exception) {}
 		}
 	}
+<<<<<<< HEAD
 
 	private fun setupBiometric() {
 		val executor: Executor = getMainExecutor(requireContext())
@@ -170,3 +149,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 			.build()
 	}
 }
+=======
+}*/
+>>>>>>> develop
