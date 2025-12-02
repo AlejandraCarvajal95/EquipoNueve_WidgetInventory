@@ -69,7 +69,9 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.52")
     ksp("com.google.dagger:hilt-compiler:2.52")
 
-    // Lifecycle / ViewModel
-    //implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
-   // implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    // Test adicionales
+    testImplementation("org.mockito:mockito-core:5.12.0")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.4.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0")
+    testImplementation("androidx.arch.core:core-testing:2.2.0")
 }
