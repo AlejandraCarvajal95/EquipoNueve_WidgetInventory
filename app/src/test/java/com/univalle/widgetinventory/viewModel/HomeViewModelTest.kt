@@ -11,16 +11,10 @@ import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import org.junit.After
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
-import org.junit.Assert.assertNotNull
-import org.junit.Assert.assertTrue
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
-import org.mockito.Mockito.mock
-import org.mockito.kotlin.whenever
+import org.mockito.Mockito.*
+import org.mockito.kotlin.*
+import org.junit.*
+import org.junit.Assert.*
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class HomeViewModelTest {
