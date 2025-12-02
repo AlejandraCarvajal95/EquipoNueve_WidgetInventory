@@ -1,4 +1,6 @@
-/*package com.univalle.widgetinventory.view.fragment
+
+/*
+package com.univalle.widgetinventory.view.fragment
 
 
 import android.os.Bundle
@@ -15,15 +17,6 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.univalle.widgetinventory.R
 import androidx.navigation.fragment.findNavController
-<<<<<<< HEAD
-import android.appwidget.AppWidgetManager
-import android.content.ComponentName
-import android.content.Intent
-import com.univalle.widgetinventory.widget.WidgetProvider
-import java.util.concurrent.Executor
-import com.airbnb.lottie.LottieAnimationView
-=======
->>>>>>> develop
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -89,6 +82,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 		btnLogin.setOnClickListener {
 			if (btnLogin.isEnabled) {
 				try { findNavController().navigate(R.id.homeFragment) } catch (_: Exception) {}
+
 			}
 		}
 		tvRegister.setOnClickListener {
@@ -96,59 +90,5 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 			try { findNavController().navigate(R.id.action_loginFragment_to_registerFragment) } catch (_: Exception) {}
 		}
 	}
-<<<<<<< HEAD
-
-	private fun setupBiometric() {
-		val executor: Executor = getMainExecutor(requireContext())
-		biometricPrompt = BiometricPrompt(this, executor,
-			object : BiometricPrompt.AuthenticationCallback() {
-				override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
-					super.onAuthenticationError(errorCode, errString)
-					Toast.makeText(requireContext(), errString, Toast.LENGTH_SHORT).show()
-				}
-
-				override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-					super.onAuthenticationSucceeded(result)
-					// Guardar sesión
-					val sharedPreferences = requireContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-					val openedFromWidget = sharedPreferences.getBoolean("opened_from_widget", false)
-					sharedPreferences.edit().putBoolean("is_logged_in", true).apply()
-					if (openedFromWidget) {
-						// Notify widget(s) to refresh and then close the activity so user returns to home screen where the widget lives
-						try {
-							val mgr = AppWidgetManager.getInstance(requireContext())
-							val cn = ComponentName(requireContext(), WidgetProvider::class.java)
-							val ids = mgr.getAppWidgetIds(cn)
-							if (ids != null && ids.isNotEmpty()) {
-								val updateIntent = Intent(requireContext(), WidgetProvider::class.java)
-								updateIntent.action = AppWidgetManager.ACTION_APPWIDGET_UPDATE
-								updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids)
-								requireContext().sendBroadcast(updateIntent)
-							}
-						} catch (_: Exception) {}
-						// clear the flag and finish the host activity so the user sees the home screen/widget
-						sharedPreferences.edit().putBoolean("opened_from_widget", false).apply()
-						requireActivity().finish()
-					} else {
-						try { findNavController().navigate(R.id.action_loginFragment_to_homeFragment) } catch (_: Exception) {}
-					}
-				}
-
-				override fun onAuthenticationFailed() {
-					super.onAuthenticationFailed()
-					Toast.makeText(requireContext(), getString(R.string.biometric_error), Toast.LENGTH_SHORT).show()
-				}
-			}
-		)
-
-		promptInfo = BiometricPrompt.PromptInfo.Builder()
-			.setTitle(getString(R.string.biometric_title))
-			.setSubtitle(getString(R.string.biometric_subtitle))
-			.setNegativeButtonText(getString(R.string.biometric_cancel))
-			.setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_STRONG)
-			.build()
-	}
 }
-=======
-}*/
->>>>>>> develop
+*/
