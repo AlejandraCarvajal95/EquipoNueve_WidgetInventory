@@ -11,6 +11,7 @@ import android.widget.RemoteViews
 import com.univalle.widgetinventory.R
 import android.util.Log
 import com.univalle.widgetinventory.repository.ProductRepository
+import com.univalle.widgetinventory.repository.ProductRepositoryFS
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -108,10 +109,9 @@ class WidgetProvider : AppWidgetProvider() {
         // Load products and compute total asynchronously
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val database = com.univalle.widgetinventory.data.AppDatabase.getDatabase(context)
-                val dao = database.productsDao()
-                val repo = ProductRepository(context, dao)
-                val products = repo.getAllProducts()
+                val database = com.univalle.widgetinventory.data.FirebaseClient()
+                val repo = ProductRepositoryFS(database)
+                val products = repo.getProducts()
                 val total = products.fold(0.0) { acc, p -> acc + (p.precio * p.cantidad) }
                 Log.d("WidgetProvider", "Loaded ${products.size} products for widget $appWidgetId, total=$total")
                 for (p in products) {

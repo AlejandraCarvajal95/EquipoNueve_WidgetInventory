@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.univalle.widgetinventory.R
 import com.univalle.widgetinventory.databinding.FragmentEditarProductoBinding
+import com.univalle.widgetinventory.model.ProductsFS
 import com.univalle.widgetinventory.viewModel.EditarProductoViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -60,12 +61,14 @@ class EditarProductoFragment : Fragment() {
             val precio = binding.etPrecioProducto.text.toString().toDoubleOrNull() ?: 0.0
             val cantidad = binding.etCantidadProducto.text.toString().toIntOrNull() ?: 0
 
-            viewModel.updateProduct(
+            val productoEditado = ProductsFS(
                 codigo = productId,
                 nombre = nombre,
                 precio = precio,
                 cantidad = cantidad
             )
+
+            viewModel.editarProducto(productoEditado)
         }
 
         // Observar cuando se carga el producto - Criterio 3: Pre-llenar campos
@@ -88,7 +91,7 @@ class EditarProductoFragment : Fragment() {
 
         // Observar el resultado de la actualización
         viewModel.isUpdated.observe(viewLifecycleOwner) { isUpdated ->
-            if (isUpdated) {
+            if (isUpdated == true) {
                 // ÉXITO: Navegar a HomeFragment para mostrar el ítem actualizado - Criterio 4
                 Toast.makeText(requireContext(), "Producto actualizado correctamente", Toast.LENGTH_SHORT).show()
                 findNavController().navigate(R.id.homeFragment)
