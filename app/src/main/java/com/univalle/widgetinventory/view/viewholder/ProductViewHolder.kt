@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.univalle.widgetinventory.R
 import com.univalle.widgetinventory.databinding.ItemProductBinding
 import com.univalle.widgetinventory.model.ProductEntity
+import com.univalle.widgetinventory.model.ProductsFS
+import com.univalle.widgetinventory.view.fragment.HomeFragmentDirections
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -15,7 +17,7 @@ class ProductViewHolder(private val binding: ItemProductBinding, navController: 
     val bindingItem = binding
     val navController = navController
 
-    fun setItemProduct(product: ProductEntity) {
+    fun setItemProduct(product: ProductsFS) {
         // Mostrar datos del producto
         binding.tvProductName.text = product.nombre
         
@@ -27,8 +29,10 @@ class ProductViewHolder(private val binding: ItemProductBinding, navController: 
 
         // Hacer la tarjeta clickeable para ir a detalle
         binding.cvProduct.setOnClickListener {
-            val bundle = bundleOf("product_id" to product.codigo)
-            navController.navigate(R.id.action_homeFragment_to_detalleProductoFragment, bundle)
+            val action = HomeFragmentDirections.actionHomeFragmentToDetalleProductoFragment(
+                productId = product.codigo
+            )
+            navController.navigate(action)
         }
     }
 }

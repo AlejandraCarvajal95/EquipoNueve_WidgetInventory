@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.RecyclerView
 import com.univalle.widgetinventory.databinding.ItemProductBinding
-import com.univalle.widgetinventory.model.ProductEntity
+import com.univalle.widgetinventory.model.ProductsFS
 import com.univalle.widgetinventory.view.viewholder.ProductViewHolder
 
 
-class ProductAdapter(private var listProducts: MutableList<ProductEntity>, private val navController: NavController) :
+class ProductAdapter(private var listProducts: MutableList<ProductsFS>?, private val navController: NavController) :
     RecyclerView.Adapter<ProductViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
@@ -23,18 +23,19 @@ class ProductAdapter(private var listProducts: MutableList<ProductEntity>, priva
 
 
     override fun getItemCount(): Int {
-        return listProducts.size
+        return listProducts?.size ?: 0
     }
-
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
-        val product = listProducts[position]
-        holder.setItemProduct(product)
+        val product = listProducts?.get(position)
+        if(product != null) {
+            holder.setItemProduct(product)
+        }
     }
 
-    fun updateProducts(newProducts: List<ProductEntity>) {
-        listProducts.clear()
-        listProducts.addAll(newProducts)
+    fun updateProducts(newProducts: List<ProductsFS>) {
+        listProducts?.clear()
+        listProducts?.addAll(newProducts)
         notifyDataSetChanged()
-    }
+   }
 }
