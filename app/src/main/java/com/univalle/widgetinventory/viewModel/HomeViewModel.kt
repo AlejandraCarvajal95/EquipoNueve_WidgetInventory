@@ -7,12 +7,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.univalle.widgetinventory.repository.ProductRepository
 import com.univalle.widgetinventory.model.ProductEntity
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
-class HomeViewModel(application: Application) : AndroidViewModel(application)  {
-    private val repository = ProductRepository(application)
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    application: Application,
+    private val repository: ProductRepository
+) : AndroidViewModel(application)  {
 
     private val _productos = MutableLiveData<MutableList<ProductEntity>>()
     val productos: LiveData<MutableList<ProductEntity>> get() = _productos

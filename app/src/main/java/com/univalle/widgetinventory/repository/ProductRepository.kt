@@ -4,16 +4,17 @@ import android.content.Context
 import android.content.Intent
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
-import com.univalle.widgetinventory.data.AppDatabase
 import com.univalle.widgetinventory.data.ProductsDAO
 import com.univalle.widgetinventory.model.ProductEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import com.univalle.widgetinventory.widget.WidgetProvider
+import javax.inject.Inject
 
-class ProductRepository(private val context: Context) {
-
-    private val productsDAO: ProductsDAO = AppDatabase.getDatabase(context).productsDao()
+class ProductRepository @Inject constructor(
+    private val context: Context,
+    private val productsDAO: ProductsDAO
+) {
 
     suspend fun getAllProducts(): List<ProductEntity> {
         return withContext(Dispatchers.IO) {

@@ -7,11 +7,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.univalle.widgetinventory.repository.ProductRepository
 import com.univalle.widgetinventory.model.ProductEntity
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class AgregarProductoViewModel(application: Application) : AndroidViewModel(application) {
-
-    private val repository = ProductRepository(application)
+@HiltViewModel
+class AgregarProductoViewModel @Inject constructor(
+    application: Application,
+    private val repository: ProductRepository
+) : AndroidViewModel(application) {
 
     private val _isSaved = MutableLiveData<Boolean>()
     val isSaved: LiveData<Boolean> = _isSaved

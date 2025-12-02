@@ -20,7 +20,10 @@ import com.univalle.widgetinventory.R
 import androidx.navigation.fragment.findNavController
 import java.util.concurrent.Executor
 import com.airbnb.lottie.LottieAnimationView
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class LoginFragment : Fragment(R.layout.fragment_login) {
 	private var eyeOpen = true
 	private var biometricPrompt: BiometricPrompt? = null

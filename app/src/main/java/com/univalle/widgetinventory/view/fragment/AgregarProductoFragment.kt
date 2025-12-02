@@ -12,7 +12,9 @@ import androidx.fragment.app.viewModels // Importa la delegación de ViewModels
 import androidx.navigation.fragment.findNavController
 import com.univalle.widgetinventory.databinding.FragmentAgregarProductoBinding
 import com.univalle.widgetinventory.viewModel.AgregarProductoViewModel // Asegúrate de tener esta importación
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AgregarProductoFragment : Fragment() {
 
     private var _binding: FragmentAgregarProductoBinding? = null
