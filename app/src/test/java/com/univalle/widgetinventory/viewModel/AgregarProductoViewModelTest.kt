@@ -3,7 +3,9 @@ package com.univalle.widgetinventory.viewModel
 import android.app.Application
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.univalle.widgetinventory.model.ProductEntity
+import com.univalle.widgetinventory.model.ProductsFS
 import com.univalle.widgetinventory.repository.ProductRepository
+import com.univalle.widgetinventory.repository.ProductRepositoryFS
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -25,13 +27,13 @@ class AgregarProductoViewModelTest {
 
     private val dispatcher = UnconfinedTestDispatcher()
 
-    private lateinit var repository: ProductRepository
+    private lateinit var repository: ProductRepositoryFS
     private lateinit var application: Application
 
     @Before
     fun setup() {
         Dispatchers.setMain(dispatcher)
-        repository = mock(ProductRepository::class.java)
+        repository = mock(ProductRepositoryFS::class.java)
         application = mock(Application::class.java)
     }
 
@@ -47,8 +49,8 @@ class AgregarProductoViewModelTest {
         vm.insertProduct(codigo = 10, nombre = "P1", precio = 12.5, cantidad = 3)
         advanceUntilIdle()
 
-        val captor = argumentCaptor<ProductEntity>()
-        verify(repository).insertProduct(captor.capture())
+        val captor = argumentCaptor<ProductsFS>()
+        verify(repository).createProduct(captor.capture())
         val inserted = captor.firstValue
         assertEquals(10, inserted.codigo)
         assertEquals("P1", inserted.nombre)
@@ -60,7 +62,7 @@ class AgregarProductoViewModelTest {
 
     @Test
     fun `insertProduct error publica isSaved false`() = runTest(dispatcher) {
-        whenever(repository.insertProduct(org.mockito.kotlin.any())).thenAnswer {
+        whenever(repository.createProduct(org.mockito.kotlin.any())).thenAnswer {
             throw RuntimeException("DB error")
         }
         val vm = AgregarProductoViewModel(application, repository)
