@@ -23,6 +23,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".view.LoginActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize|stateVisible" />
         
         <receiver android:name=".widget.WidgetProvider"
             android:label="Inventory Widget"
