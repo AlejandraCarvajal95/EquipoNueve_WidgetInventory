@@ -67,12 +67,21 @@ dependencies {
     implementation("com.google.firebase:firebase-firestore")
 
     // Hilt
-    implementation("com.google.dagger:hilt-android:2.52")
-    ksp("com.google.dagger:hilt-compiler:2.52")
+    implementation("com.google.dagger:hilt-android:2.57.2")
+    ksp("com.google.dagger:hilt-compiler:2.57.2")
 
     // Test adicionales
     testImplementation("org.mockito:mockito-core:5.12.0")
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.4.0")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0")
     testImplementation("androidx.arch.core:core-testing:2.2.0")
+}
+
+// Force kotlinx-metadata-jvm to a newer release so annotation processors
+// (Hilt/KSP/KAPT) can handle Kotlin metadata 2.2.0 produced by the Kotlin
+// Gradle plugin used in this project.
+configurations.all {
+    resolutionStrategy {
+        force("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.9.0")
+    }
 }
