@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:background="@drawable/bg_widget">
+
+    <ImageView
+        android:id="@+id/iv_logo"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@mipmap/icon_inventory"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true" />
+
+    <TextView
+        android:id="@+id/tv_inventory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Inventory"
+        android:textColor="@color/naranja"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:layout_below="@id/iv_logo"
+        android:layout_alignStart="@id/iv_logo"
+        android:layout_marginTop="6dp" />
+
+    <TextView
+        android:id="@+id/tv_question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¿Cuánto tengo de inventario?"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@id/iv_logo"
+        android:layout_marginStart="12dp" />
+
+    <TextView
+        android:id="@+id/tv_balance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="$****"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:includeFontPadding="false"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:layout_below="@id/tv_question"
+        android:layout_toStartOf="@+id/iv_eye"
+        android:layout_toEndOf="@id/iv_logo"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp" />
+
+    <ImageView
+        android:id="@+id/iv_eye"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_eye_closed"
+        android:adjustViewBounds="true"
+        android:scaleType="centerInside"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@id/tv_question"
+        android:layout_marginEnd="12dp" />
+
+    <TextView
+        android:id="@+id/tv_manage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gestionar inventario"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@id/iv_manage"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp" />
+
+    <ImageView
+        android:id="@+id/iv_manage"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_manage_orange"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp" />
+
+</RelativeLayout>

@@ -1,4 +1,13 @@
 <resources>
     <string name="app_name">WidgetInventory</string>
     <string name="title_login">Inventory</string>
+    <string name="agregar_producto">Agregar Producto</string>
+    <string name="biometric_title">Autenticación con Biometría</string>
+    <string name="biometric_subtitle">Ingrese su huella digital</string>
+    <string name="biometric_cancel">Cancelar</string>
+    <string name="biometric_error">Autenticación biométrica no disponible</string>
+    <string name="title_home">Inventario</string>
+    <string name="descripcionExit">Salir</string>
+    <string name="min_6_digits">Mínimo 6 dígitos</string>
+    <string name="password_mismatch">Las contraseñas no coinciden</string>
 </resources>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CopilotDiffPersistence">
+    <option name="pendingDiffs">
+      <map>
+        <entry key="$PROJECT_DIR$/app/src/main/java/com/univalle/widgetinventory/viewModel/DetalleProductoViewModelFactory.kt">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/app/src/main/java/com/univalle/widgetinventory/viewModel/DetalleProductoViewModelFactory.kt" />
+              <option name="updatedContent" value="package com.univalle.widgetinventory.viewModel&#10;&#10;import androidx.lifecycle.ViewModel&#10;import androidx.lifecycle.ViewModelProvider&#10;import com.univalle.widgetinventory.repository.ProductRepository&#10;&#10;class DetalleProductoViewModelFactory(private val repository: ProductRepository) : ViewModelProvider.Factory {&#10;    @Suppress(&quot;UNCHECKED_CAST&quot;)&#10;    override fun &lt;T : ViewModel&gt; create(modelClass: Class&lt;T&gt;): T {&#10;        if (modelClass.isAssignableFrom(DetalleProductoViewModel::class.java)) {&#10;            return DetalleProductoViewModel(repository) as T&#10;        }&#10;        throw IllegalArgumentException(&quot;Clase ViewModel desconocida: ${modelClass.name}&quot;)&#10;    }&#10;}" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

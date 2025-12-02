@@ -3,21 +3,62 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginFragment">
-
-    <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.univalle.widgetinventory.ui.login.LoginFragment"
-        android:label="Login"
-        tools:layout="@layout/fragment_login">
-        <action
-            android:id="@+id/action_loginFragment_to_homeFragment"
-            app:destination="@id/homeFragment" />
-    </fragment>
+    app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.univalle.widgetinventory.ui.home.HomeFragment"
+        android:name="com.univalle.widgetinventory.view.fragment.HomeFragment"
         android:label="Home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_agregarProductoFragment"
+            app:destination="@id/agregarProductoFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_detalleProductoFragment"
+            app:destination="@id/detalleProductoFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/agregarProductoFragment"
+        android:name="com.univalle.widgetinventory.view.fragment.AgregarProductoFragment"
+        android:label="Agregar"
+        tools:layout="@layout/fragment_agregar_producto" />
+
+    <fragment
+        android:id="@+id/detalleProductoFragment"
+        android:name="com.univalle.widgetinventory.view.fragment.DetalleProductoFragment"
+        android:label="Detalle"
+        tools:layout="@layout/fragment_product_details">
+        <argument
+            android:name="product_id"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <action
+            android:id="@+id/action_detalleProductoFragment_to_editarProductoFragment"
+            app:destination="@id/editarProductoFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/editarProductoFragment"
+        android:name="com.univalle.widgetinventory.view.fragment.EditarProductoFragment"
+        android:label="Editar"
+        tools:layout="@layout/fragment_editar_producto">
+        <argument
+            android:name="product_id"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.univalle.widgetinventory.view.fragment.RegisterFragment"
+        android:label="Register"
+        tools:layout="@layout/fragment_register">
+        <action
+            android:id="@+id/action_registerFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+
+
 </navigation>
