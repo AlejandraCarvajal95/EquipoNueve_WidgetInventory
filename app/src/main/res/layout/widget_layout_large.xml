@@ -61,11 +61,11 @@
         android:id="@+id/iv_eye"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:src="@drawable/ic_eye_open"
+        android:src="@drawable/ic_eye_closed"
         android:adjustViewBounds="true"
         android:scaleType="centerInside"
         android:layout_alignParentEnd="true"
-        android:layout_alignBaseline="@id/tv_inventory"
+        android:layout_alignTop="@id/tv_question"
         android:layout_marginEnd="12dp" />
 
     <TextView

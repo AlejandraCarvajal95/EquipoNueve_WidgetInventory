@@ -46,13 +46,14 @@ class WidgetProvider : AppWidgetProvider() {
             val appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1)
             if (appWidgetId != -1) {
                 // Check if user is logged in; if not, open login flow
-                val appPrefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+                val appPrefs = context.getSharedPreferences("shared", Context.MODE_PRIVATE)
                 val isLoggedIn = appPrefs.getBoolean("is_logged_in", false)
                 if (!isLoggedIn) {
-                    Log.d("WidgetProvider", "User not logged in -> launching MainActivity for login")
-                    val i = Intent(context, com.univalle.widgetinventory.MainActivity::class.java)
-                    i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                    i.putExtra("open_login", true)
+                    Log.d("WidgetProvider", "User not logged in -> launching LoginActivity")
+                    // Marcar que venimos del widget
+                    appPrefs.edit().putBoolean("opened_from_widget", true).apply()
+                    val i = Intent(context, com.univalle.widgetinventory.view.LoginActivity::class.java)
+                    i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
                     context.startActivity(i)
                 } else {
                     val key = PREF_MASKED + appWidgetId
@@ -65,12 +66,21 @@ class WidgetProvider : AppWidgetProvider() {
                 }
             }
         } else if (intent.action == ACTION_MANAGE) {
-            // Launch MainActivity with extra to open login
-            Log.d("WidgetProvider", "Received ACTION_MANAGE - launching MainActivity to open login")
-            val i = Intent(context, com.univalle.widgetinventory.MainActivity::class.java)
-            i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            i.putExtra("open_login", true)
-            context.startActivity(i)
+            // Launch MainActivity to manage inventory
+            Log.d("WidgetProvider", "Received ACTION_MANAGE - launching MainActivity")
+            val appPrefs = context.getSharedPreferences("shared", Context.MODE_PRIVATE)
+            val isLoggedIn = appPrefs.getBoolean("is_logged_in", false)
+            
+            if (isLoggedIn) {
+                val i = Intent(context, com.univalle.widgetinventory.MainActivity::class.java)
+                i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                context.startActivity(i)
+            } else {
+                appPrefs.edit().putBoolean("opened_from_widget", true).apply()
+                val i = Intent(context, com.univalle.widgetinventory.view.LoginActivity::class.java)
+                i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                context.startActivity(i)
+            }
         }
     }
 
@@ -95,7 +105,7 @@ class WidgetProvider : AppWidgetProvider() {
         views.setTextViewText(R.id.tv_balance, "$****")
         views.setImageViewResource(R.id.iv_eye, R.drawable.ic_eye_closed)
 
-        // Setup pending intents for eye and manage
+        // Setup pending intents for eye toggle
         val toggleIntent = Intent(context, WidgetProvider::class.java).apply {
             action = ACTION_TOGGLE
             putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
@@ -103,40 +113,40 @@ class WidgetProvider : AppWidgetProvider() {
         val togglePI = PendingIntent.getBroadcast(context, appWidgetId, toggleIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
         views.setOnClickPendingIntent(R.id.iv_eye, togglePI)
 
-        // Prefer launching activity directly for reliability after process death
-        val manageActivityIntent = Intent(context, com.univalle.widgetinventory.MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-            putExtra("open_login", true)
+        // Setup pending intents for manage button
+        val manageIntent = Intent(context, WidgetProvider::class.java).apply {
+            action = ACTION_MANAGE
         }
-        val managePI = PendingIntent.getActivity(
+        val managePI = PendingIntent.getBroadcast(
             context,
             appWidgetId + 100000,
-            manageActivityIntent,
+            manageIntent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
         views.setOnClickPendingIntent(R.id.iv_manage, managePI)
         views.setOnClickPendingIntent(R.id.tv_manage, managePI)
 
+        // Check if user is logged in
+        val appPrefs = context.getSharedPreferences("shared", Context.MODE_PRIVATE)
+        val isLoggedIn = appPrefs.getBoolean("is_logged_in", false)
+
         // Load products and compute total asynchronously
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val database = com.univalle.widgetinventory.data.FirebaseClient()
-                val repo = ProductRepositoryFS(database)
-                val products = repo.getProducts()
-                val total = products.fold(0.0) { acc, p -> acc + (p.precio * p.cantidad) }
-                Log.d("WidgetProvider", "Loaded ${products.size} products for widget $appWidgetId, total=$total")
-                for (p in products) {
-                    Log.d("WidgetProvider", " product: codigo=${p.codigo} nombre=${p.nombre} precio=${p.precio} cantidad=${p.cantidad}")
-                }
-                val formatted = formatAmount(total)
+                if (isLoggedIn && !masked) {
+                    // Usuario logueado y quiere ver el saldo
+                    val database = com.univalle.widgetinventory.data.FirebaseClient()
+                    val repo = ProductRepositoryFS(database)
+                    val products = repo.getProducts()
+                    val total = products.fold(0.0) { acc, p -> acc + (p.precio * p.cantidad) }
+                    Log.d("WidgetProvider", "Loaded ${products.size} products for widget $appWidgetId, total=$total")
+                    val formatted = formatAmount(total)
 
-                if (!masked) {
                     views.setTextViewText(R.id.tv_balance, "$" + formatted)
-                    // when unmasked -> show open eye
                     views.setImageViewResource(R.id.iv_eye, R.drawable.ic_eye_open)
                 } else {
+                    // Mostrar asteriscos (saldo oculto)
                     views.setTextViewText(R.id.tv_balance, "$****")
-                    // when masked -> show closed eye
                     views.setImageViewResource(R.id.iv_eye, R.drawable.ic_eye_closed)
                 }
 
@@ -144,7 +154,7 @@ class WidgetProvider : AppWidgetProvider() {
                 Log.e("WidgetProvider", "Error loading products for widget $appWidgetId", e)
                 // On error keep masked/default
                 views.setTextViewText(R.id.tv_balance, "$****")
-                views.setImageViewResource(R.id.iv_eye, R.drawable.ic_eye_open)
+                views.setImageViewResource(R.id.iv_eye, R.drawable.ic_eye_closed)
             } finally {
                 // Apply update on UI thread
                 val mgr = AppWidgetManager.getInstance(context)
