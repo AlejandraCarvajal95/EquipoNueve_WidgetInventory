@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
+import com.univalle.widgetinventory.data.FirebaseClient
 import com.univalle.widgetinventory.data.ProductsDAO
 import com.univalle.widgetinventory.model.ProductEntity
 import kotlinx.coroutines.Dispatchers
@@ -13,24 +14,29 @@ import javax.inject.Inject
 
 class ProductRepository @Inject constructor(
     private val context: Context,
-    private val productsDAO: ProductsDAO
+    private val productsDAO: ProductsDAO,
+    private val firebaseClient: FirebaseClient
 ) {
 
     suspend fun getAllProducts(): List<ProductEntity> {
         return withContext(Dispatchers.IO) {
-            productsDAO.getAll()
+            val userId = firebaseClient.auth.currentUser?.uid ?: return@withContext emptyList()
+            productsDAO.getAll(userId)
         }
     }
 
     suspend fun getProductByID(id: Int): ProductEntity {
         return withContext(Dispatchers.IO) {
-            productsDAO.getProductoByID(id)
+            val userId = firebaseClient.auth.currentUser?.uid ?: throw IllegalStateException("Usuario no autenticado")
+            productsDAO.getProductoByID(id, userId)
         }
     }
 
     suspend fun insertProduct(product: ProductEntity) {
         withContext(Dispatchers.IO) {
-            productsDAO.insertProducto(product)
+            val userId = firebaseClient.auth.currentUser?.uid ?: throw IllegalStateException("Usuario no autenticado")
+            val productWithUser = product.copy(userId = userId)
+            productsDAO.insertProducto(productWithUser)
             // Notify widgets that data changed
             notifyWidgets()
         }
@@ -38,7 +44,9 @@ class ProductRepository @Inject constructor(
 
     suspend fun updateProduct(product: ProductEntity) {
         withContext(Dispatchers.IO) {
-            productsDAO.updateProducto(product)
+            val userId = firebaseClient.auth.currentUser?.uid ?: throw IllegalStateException("Usuario no autenticado")
+            val productWithUser = product.copy(userId = userId)
+            productsDAO.updateProducto(productWithUser)
             // Notify widgets that data changed
             notifyWidgets()
         }
@@ -46,7 +54,8 @@ class ProductRepository @Inject constructor(
 
     suspend fun deleteProduct(id: Int) {
         withContext(Dispatchers.IO) {
-            productsDAO.deleteProducto(id)
+            val userId = firebaseClient.auth.currentUser?.uid ?: return@withContext
+            productsDAO.deleteProducto(id, userId)
             // Notify widgets that data changed
             notifyWidgets()
         }

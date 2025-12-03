@@ -9,11 +9,17 @@ import com.univalle.widgetinventory.model.ProductEntity
 
 @Dao
 interface ProductsDAO {
+    @Query("SELECT * FROM productos WHERE userId = :userId")
+    suspend fun getAll(userId: String): List<ProductEntity>
+    
     @Query("SELECT * FROM productos")
-    suspend fun getAll(): List<ProductEntity>
+    suspend fun getAllProducts(): List<ProductEntity>
 
+    @Query("SELECT * FROM productos WHERE codigo = :codigoBuscado AND userId = :userId")
+    suspend fun getProductoByID(codigoBuscado: Int, userId: String): ProductEntity
+    
     @Query("SELECT * FROM productos WHERE codigo = :codigoBuscado")
-    suspend fun getProductoByID(codigoBuscado: Int): ProductEntity
+    suspend fun getProductoByCode(codigoBuscado: Int): ProductEntity
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
     suspend fun insertProducto(producto: ProductEntity)
@@ -21,6 +27,9 @@ interface ProductsDAO {
     @Update
     suspend fun updateProducto(producto: ProductEntity)
 
+    @Query("DELETE FROM productos WHERE codigo = :codigoBuscado AND userId = :userId")
+    suspend fun deleteProducto(codigoBuscado: Int, userId: String)
+    
     @Query("DELETE FROM productos WHERE codigo = :codigoBuscado")
-    suspend fun deleteProducto(codigoBuscado: Int)
+    suspend fun deleteProductByCode(codigoBuscado: Int)
 }

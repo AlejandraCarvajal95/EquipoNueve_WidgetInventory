@@ -18,8 +18,9 @@ object RepositoryModule {
     @Singleton
     fun provideProductRepository(
         @ApplicationContext context: Context,
-        productsDAO: ProductsDAO
+        productsDAO: ProductsDAO,
+        firebaseClient: com.univalle.widgetinventory.data.FirebaseClient
     ): ProductRepository {
-        return ProductRepository(context, productsDAO)
+        return ProductRepository(context, productsDAO, firebaseClient)
     }
 }

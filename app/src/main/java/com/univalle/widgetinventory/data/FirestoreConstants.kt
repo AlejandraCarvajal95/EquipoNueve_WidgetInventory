@@ -9,6 +9,7 @@ object FirestoreConstants {
         const val FIELD_NOMBRE = "Nombre"
         const val FIELD_PRECIO = "Precio"
         const val FIELD_CANTIDAD = "Cantidad"
+        const val FIELD_USER_ID = "UserId"
     }
 
 }

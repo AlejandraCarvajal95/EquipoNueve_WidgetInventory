@@ -13,16 +13,26 @@ class ProductRepositoryFS @Inject constructor(private val firebase: FirebaseClie
     private val productsCollection = firebase.db.collection(COLLECTION_PRODUCTS)
 
     suspend fun createProduct(product : ProductsFS) = runCatching {
-
-        val dataToSave = product.toFirebaseMap()
+        // Obtener el userId del usuario actual
+        val currentUserId = firebase.auth.currentUser?.uid ?: throw IllegalStateException("Usuario no autenticado")
+        
+        // Crear el producto con el userId del usuario actual
+        val productWithUser = product.copy(userId = currentUserId)
+        val dataToSave = productWithUser.toFirebaseMap()
 
         productsCollection.add(dataToSave).await()
 
     }.isSuccess
 
     suspend fun getProducts(): List<ProductsFS> {
-
-        val result = productsCollection.get().await()
+        // Obtener el userId del usuario actual
+        val currentUserId = firebase.auth.currentUser?.uid ?: return emptyList()
+        
+        // Filtrar productos solo del usuario actual
+        val result = productsCollection
+            .whereEqualTo("UserId", currentUserId)
+            .get()
+            .await()
 
         return result.documents
             .mapNotNull { documentSnapshot ->
@@ -37,9 +47,12 @@ class ProductRepositoryFS @Inject constructor(private val firebase: FirebaseClie
     }
 
     suspend fun getProductByCode(codigo: Int): ProductsFS? {
-
+        // Obtener el userId del usuario actual
+        val currentUserId = firebase.auth.currentUser?.uid ?: return null
+        
         val querySnapshot = productsCollection
             .whereEqualTo("Codigo", codigo)
+            .whereEqualTo("UserId", currentUserId)
             .get()
             .await()
 
@@ -55,11 +68,14 @@ class ProductRepositoryFS @Inject constructor(private val firebase: FirebaseClie
     }
 
     suspend fun updateProduct(product: ProductsFS) = runCatching {
-
-        // 1. 🔍 BUSCAR EL DOCUMENTO POR EL CAMPO 'Codigo'
+        // Obtener el userId del usuario actual
+        val currentUserId = firebase.auth.currentUser?.uid ?: throw IllegalStateException("Usuario no autenticado")
+        
+        // 1. 🔍 BUSCAR EL DOCUMENTO POR EL CAMPO 'Codigo' Y UserId
         // La búsqueda debe basarse en el valor único del campo, no en el ID del documento.
         val querySnapshot = productsCollection
             .whereEqualTo("Codigo", product.codigo)
+            .whereEqualTo("UserId", currentUserId)
             .get()
             .await()
 
@@ -71,8 +87,10 @@ class ProductRepositoryFS @Inject constructor(private val firebase: FirebaseClie
         }
 
         val actualDocumentId = documentSnapshot.id
-
-        val dataToUpdate = product.toFirebaseMap()
+        
+        // Asegurarse de que el userId se mantenga
+        val productWithUser = product.copy(userId = currentUserId)
+        val dataToUpdate = productWithUser.toFirebaseMap()
 
         productsCollection.document(actualDocumentId)
             .set(dataToUpdate)
@@ -82,9 +100,12 @@ class ProductRepositoryFS @Inject constructor(private val firebase: FirebaseClie
 
 
     suspend fun deleteProduct(codigo: Int) = runCatching {
-
+        // Obtener el userId del usuario actual
+        val currentUserId = firebase.auth.currentUser?.uid ?: return@runCatching
+        
         val querySnapshot = productsCollection
             .whereEqualTo("Codigo", codigo)
+            .whereEqualTo("UserId", currentUserId)
             .get()
             .await()
 
